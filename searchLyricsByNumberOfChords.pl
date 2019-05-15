@@ -1,24 +1,33 @@
 use strict;
 use warnings;
+require "./checkChordsLinesInFile.pl";
 
 sub SearchLyricsByNumberOfChords
 {
 	my @list = ();
 	my $filename = $_[0];
     my $quantity = $_[1];
-	open (my $fh, '<:encoding(UTF-8)', $filename) or die "Error: opening file '$filename'";
+    my $chordsLinesCounter = 0;
+	open (my $fh, $filename) or die "Error: opening file '$filename'";
 
 	while (my $line = <$fh>)
 	{
-        while ($line =~ /([CDEFGAB]#?m?7?M?7?\+?\d*)/g)
-        {
+        my $isChordLine = checkChordsLinesInFile($line);
+
+        if ($isChordLine == 1) {
+            $chordsLinesCounter = $chordsLinesCounter + 1;
+            while ($line =~ /([CDEFGAB]#?m?7?M?7?\+?\d*)/g)
+            {
                 push (@list, ($1));       
+            }
         }
 	}
 
     my @result = keys %{ { map { $_=> 1 } @list } };
 
-    print "Chords quantity: $#result \n";
+    print "DEBUG: Chords lines quantity: $chordsLinesCounter \n";
+
+    print "DEBUG: Chords quantity: $#result \n";
 
     if ($quantity == $#result) {
         print "Match quantity\n";
@@ -32,16 +41,10 @@ sub SearchLyricsByNumberOfChords
 	return @list;
 }
 
-print "Number of chords: ";
+print "Number of desired chords: ";
 
 my $number = <STDIN>;
 
 chomp $number;
 
-my @chords = SearchLyricsByNumberOfChords("lyrics.txt", $number);
-
-# debug
-# foreach (@chords)
-# {
-# 	print "$_\n";
-# }
+my @chords = SearchLyricsByNumberOfChords("./cifras/a_lenda.txt", $number);
