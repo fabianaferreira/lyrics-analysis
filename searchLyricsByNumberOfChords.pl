@@ -23,23 +23,19 @@ sub SearchLyricsByNumberOfChords
         }
 	}
 
+    close $fh or die "Error: closing file '$filename'";
+
     my @result = keys %{ { map { $_=> 1 } @list } };
     my $chordsQuantity = @result;
 
-    print "DEBUG: Chords line quantity: $chordsLinesCounter \n";
+    # print "DEBUG: Chords line quantity: $chordsLinesCounter \n";
 
-    print "DEBUG: Chords quantity: $chordsQuantity \n";
+    # print "DEBUG: Chords quantity: $chordsQuantity \n";
 
     if ($quantity == $chordsQuantity) {
-        print "Match quantity\n";
+        return 1;
     }
-    else {
-        print "Doesnt match quantity\n";
-    }
-	
-	close $fh or die "Error: closing file '$filename'";
-
-	return @list;
+    return 0;
 }
 
 print "Number of desired chords: ";
@@ -48,4 +44,11 @@ my $number = <STDIN>;
 
 chomp $number;
 
-my @chords = SearchLyricsByNumberOfChords("./cifras/eu_sei_que_vou_te_amar.txt", $number);
+my @lyrics = ("./cifras/eu_sei_que_vou_te_amar.txt", "./cifras/a_lenda.txt", "./cifras/era_uma_vez.txt", "./cifras/imortal.txt", "./cifras/as_quatro_estacoes.txt", "./cifras/sonho_azul.txt");
+
+foreach (@lyrics) {
+    my $isAMatch = SearchLyricsByNumberOfChords($_, $number);
+    if ($isAMatch == 1) {
+        print "Lyrics: $_. Match quantity\n";
+    }
+}
