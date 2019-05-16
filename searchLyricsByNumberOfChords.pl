@@ -16,7 +16,7 @@ sub SearchLyricsByNumberOfChords
 
         if ($isChordLine == 1) {
             $chordsLinesCounter = $chordsLinesCounter + 1;
-            while ($line =~ /([CDEFGAB]#?m?7?M?7?\+?\d*)/g)
+            while ($line =~ /([CDEFGAB]\S+)/g)
             {
                 push (@list, ($1));       
             }
@@ -24,12 +24,13 @@ sub SearchLyricsByNumberOfChords
 	}
 
     my @result = keys %{ { map { $_=> 1 } @list } };
+    my $chordsQuantity = @result;
 
-    print "DEBUG: Chords lines quantity: $chordsLinesCounter \n";
+    print "DEBUG: Chords line quantity: $chordsLinesCounter \n";
 
-    print "DEBUG: Chords quantity: $#result \n";
+    print "DEBUG: Chords quantity: $chordsQuantity \n";
 
-    if ($quantity == $#result) {
+    if ($quantity == $chordsQuantity) {
         print "Match quantity\n";
     }
     else {
@@ -47,4 +48,4 @@ my $number = <STDIN>;
 
 chomp $number;
 
-my @chords = SearchLyricsByNumberOfChords("./cifras/a_lenda.txt", $number);
+my @chords = SearchLyricsByNumberOfChords("./cifras/eu_sei_que_vou_te_amar.txt", $number);

@@ -15,10 +15,10 @@ sub checkChordsLinesInFile
 	}
 		
 	# If not, tests if there is at least one word with more than three characters 
-	# or there is at least one word that doesn't have one of the basic melodies
+	# or there is at least one word that doesn't have one of the basic chords
 	foreach (@splitString) {
 		$length =  length($_);
-		if ($length > 3 or $_ =~ /(^[^CDEFGAB]+$)/g) {
+		if ($_ =~ /(^[^CDEFGAB]+$)/g) {
 			return 0;
 		}
 	}
