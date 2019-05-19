@@ -18,7 +18,7 @@ sub checkChordsLinesInFile
 	# or there is at least one word that doesn't have one of the basic chords
 	foreach (@splitString) {
 		$length =  length($_);
-		if ($_ =~ /(^[^CDEFGAB]+$)/g) {
+		if ($_ =~ /(^[^CDEFGAB].+$)/g) {
 			return 0;
 		}
 	}

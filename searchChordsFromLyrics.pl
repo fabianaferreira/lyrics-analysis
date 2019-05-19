@@ -27,7 +27,7 @@ my $file = <STDIN>;
 
 chomp $file;
 
-my @chords = SearchChord("lyrics.txt");
+my @chords = SearchChordFromLyrics("a_lenda.txt");
 foreach (@chords)
 {
 	print "$_\n";
