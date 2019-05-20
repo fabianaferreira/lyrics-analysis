@@ -1,4 +1,4 @@
-for f in $(cat arquivos_sem_linha_tom.txt)
+for f in $(cat filesToRemove.txt)
 do
 rm "$f"
 done
