@@ -9,7 +9,7 @@ sub SearchChordFromLyrics
 
 	while (my $line = <$fh>)
 	{
-  	while ($line =~ /([CDEFGAB]#?m?7?M?7?\+?\d*)/g)
+  	while ($line =~ /([CDEFGAB]?\S+)/g)
     {
 			my $chord = $1;
 			push (@list, $chord);
