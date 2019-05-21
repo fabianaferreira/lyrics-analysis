@@ -2,7 +2,7 @@ use strict;
 use warnings;
 require "./checkChordsLinesInFile.pl";
 
-sub SearchChordFromLyrics
+sub SearchChordsFromLyrics
 {
 	my %list;
 	my $filename = $_[0];
@@ -26,14 +26,15 @@ sub SearchChordFromLyrics
 		}
 	}
 
-
 	close $fh or die "Error: closing file '$filename'";
 
 	return %list;
 }
 
-my %chords = SearchChordFromLyrics("./cifras/imortal.txt");
+my %chords = SearchChordsFromLyrics("./cifras/imortal.txt");
 
 foreach my $key (sort {$chords{$b} <=> $chords{$a}} keys %chords) {
    print " $key \t\t \t$chords{$key}\n";
 }
+
+1;
