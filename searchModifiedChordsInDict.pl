@@ -9,9 +9,6 @@ sub searchModifiedChordsInDict
 	
     open (my $fh, $filename) or die "Error: opening file '$filename'";
 
-    # Given the two variables, now we need to search in the file
-    # for the chords that have less or equal quantity of chords and
-    # barre chord or not
     while (my $line = <$fh>) 
     {
         while ($line =~ /(.+$modification[^\s]?)/g)
@@ -26,7 +23,7 @@ sub searchModifiedChordsInDict
 	return @list;
 }
 
-print "Type which modification you are searching for (4th, 5th, 7th and 9th): ";
+print "Type which modification you are searching for (4, 5, 7 and 9): ";
 
 my $input = <STDIN>;
 
