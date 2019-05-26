@@ -363,8 +363,6 @@ sub IdentifyMusicAndArtistName
     my $path = $_[0];
 	my @result;
 
-    print "dentro da funcao antes do if \n\n";
-
     if ($path =~ /^\.\/cifras\/(.+)\/(.+)\.txt$/g) {
         my $artist = $1;
         my $name = $2;
@@ -373,12 +371,9 @@ sub IdentifyMusicAndArtistName
         $artist =~ s/_/ /g;
         $name =~ s/_/ /g;
 
-
-        print "DEBUG: $artist , $name \n\n";
-
         # Capitalizing first letter
-        $artist =~ s/^([a-z])/\U$1/;
-        $name =~ s/^([a-z])/\U$1/;
+        $artist =~ s/^([a-z])/\U$1/g;
+        $name =~ s/^([a-z])/\U$1/g;
 
         push (@result, $artist);
         push (@result, $name);
