@@ -12,7 +12,7 @@
   
   * Go to module's directory `./lyricsAnalysisModule` and run the following commands:
   
-          perl Makefile.PL INSTALL_BASE=/home/lucas/modules
+          perl Makefile.PL INSTALL_BASE=/home/user/modules
 
           make
 
