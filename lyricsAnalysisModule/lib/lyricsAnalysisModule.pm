@@ -139,6 +139,24 @@ sub getNewChord
 {
     my $offset = $_[0];
     my $currentChord = $_[1];
+
+
+    if ($currentChord eq "Bb") {
+        $currentChord = "A#";
+    }
+    elsif ($currentChord eq "Db") {
+        $currentChord = "C#";
+    }
+    elsif ($currentChord eq "Eb") {
+        $currentChord = "D#";
+    }
+    elsif ($currentChord eq "Gb") {
+        $currentChord = "F#";
+    }
+    elsif ($currentChord eq "Ab") {
+        $currentChord = "G#";
+    }
+
     my @chords = ("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B");
 
     # Finds chord index in array
@@ -162,6 +180,7 @@ sub ChangeLyricsTune
 	my $filename = $_[0];
     my $offset = $_[1];
     my $lyricsTune;
+    my $hasItTune = 0;
 	open (my $fh, $filename) or die "Error: opening file '$filename'";
 
 	while (my $line = <$fh>)
@@ -169,11 +188,14 @@ sub ChangeLyricsTune
         if ($line =~ /(?:tom)\s?:\s?(.+)/gi)
         {
             $lyricsTune = $1;
+            $hasItTune = 1;
             last;
         }
 	}
 
-    print "Lyrics tune: $lyricsTune \n";
+    if ($hasItTune == 0) {
+        return 0;
+    }
 
     # Creating new file that has the same content that the original one
     # but changing lyrics tune and renamed so as to identify it
