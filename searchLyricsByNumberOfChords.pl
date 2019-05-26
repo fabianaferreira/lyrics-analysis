@@ -30,21 +30,6 @@ sub SearchLyricsByNumberOfChords
         return 1;
     }
 
-    print "\n No match! Chords quantity in lyrics '$filename': $chordsQuantity.\n\n";
+    # print "\n No match! Chords quantity in lyrics '$filename': $chordsQuantity.\n\n";
     return 0;
-}
-
-print " Number of desired chords: ";
-
-my $number = <STDIN>;
-
-chomp $number;
-
-my @lyrics = ("./cifras/era_uma_vez.txt", "./cifras/imortal.txt", "./cifras/as_quatro_estacoes.txt");
-
-foreach (@lyrics) {
-    my $isAMatch = SearchLyricsByNumberOfChords($_, $number);
-    if ($isAMatch == 1) {
-        print "\n Match! Lyrics: $_.\n\n";
-    }
 }

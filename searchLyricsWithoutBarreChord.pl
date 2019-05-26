@@ -35,7 +35,7 @@ sub SearchLyricsWithoutBarreChord
     return 0;
 }
 
-my $areThereBarreChords = SearchLyricsWithoutBarreChord("./cifras/inesquecivel.txt");
+my $areThereBarreChords = SearchLyricsWithoutBarreChord("./cifras/sandy_junior/inesquecivel.txt");
 
 if ($areThereBarreChords == 0) {
     print "There are no barre chords in lyrics\n";

@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-sub searchModifiedChordsInDict
+sub SearchModifiedChordsInDict
 {
 	my @list = ();
 	my $filename = "./dict.txt";
@@ -21,16 +21,4 @@ sub searchModifiedChordsInDict
 	close $fh or die "Error: closing file '$filename'";
 
 	return @list;
-}
-
-print "Type which modification you are searching for (4, 5, 7 and 9): ";
-
-my $input = <STDIN>;
-
-chomp $input;
-
-my @chordsWithModification = searchModifiedChordsInDict($input);
-foreach (@chordsWithModification)
-{
-	print "$_\n";
 }

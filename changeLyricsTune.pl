@@ -24,7 +24,7 @@ sub getNewChord
     return $chords[$newIndex];
 }
 
-sub changeLyricsTune
+sub ChangeLyricsTune
 {
 	my $filename = $_[0];
     my $offset = $_[1];
@@ -76,13 +76,6 @@ sub changeLyricsTune
 
     close $f or die "Error: closing file '$resultFile'";  
     close $fh or die "Error: closing file '$filename'";
+
+    return 1;
 }
-
-print " Desired offset: ";
-
-my $input = <STDIN>;
-
-chomp $input;
-
-my $lyrics = "./cifras/as_quatro_estacoes.txt";
-my $result = changeLyricsTune($lyrics, $input);

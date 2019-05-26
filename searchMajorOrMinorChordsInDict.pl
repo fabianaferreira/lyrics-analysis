@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-sub searchModifiedChordsInDict
+sub SearchMajorOrMinorChordsInDict
 {
 	my @list = ();
 	my $filename = "./dict.txt";
@@ -30,16 +30,4 @@ sub searchModifiedChordsInDict
 	close $fh or die "Error: closing file '$filename'";
 
 	return @list;
-}
-
-print "Type which modification you are searching for (m - minor or M/+ - major). It's case sensitive: ";
-
-my $input = <STDIN>;
-
-chomp $input;
-
-my @chordsWithModification = searchModifiedChordsInDict($input);
-foreach (@chordsWithModification)
-{
-	print "$_\n";
 }

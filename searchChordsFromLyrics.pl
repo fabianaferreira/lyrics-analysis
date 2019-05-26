@@ -31,10 +31,4 @@ sub SearchChordsFromLyrics
 	return %list;
 }
 
-my %chords = SearchChordsFromLyrics("./cifras/imortal.txt");
-
-foreach my $key (sort {$chords{$b} <=> $chords{$a}} keys %chords) {
-   print " $key \t\t \t$chords{$key}\n";
-}
-
 1;

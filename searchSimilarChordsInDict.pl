@@ -48,15 +48,3 @@ sub SearchSimilarChordsInDict
 
 	return @list;
 }
-
-print "Type which chord you want to search for similar chords: ";
-
-my $input = <STDIN>;
-
-chomp $input;
-
-my @similarChords = SearchSimilarChordsInDict($input);
-foreach (@similarChords)
-{
-	print "$_\n";
-}

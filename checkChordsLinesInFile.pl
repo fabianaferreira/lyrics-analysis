@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-sub checkChordsLinesInFile
+sub CheckChordsLinesInFile
 {
 
 	my $line = $_[0];
