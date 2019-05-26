@@ -78,7 +78,13 @@ if ($option eq "chords") {
 	}
 	foreach (@lyrics) {
         my %chords = SearchChordsFromLyrics($_);
+		my @nameArtist = IdentifyMusicAndArtistName($_);
+
+		my $artist = $nameArtist[0];
+		my $music = $nameArtist[1];
+
         print "Lyrics: '$_'\n";
+		print " Details (music | artist): $music | $artist \n\n";
         foreach my $key (sort {$chords{$b} <=> $chords{$a}} keys %chords) {
         print " $key \t\t \t$chords{$key}\n";
         }
@@ -99,8 +105,14 @@ if ($option eq "number") {
 	}
 	foreach (@lyrics) {
         my $result = SearchLyricsByNumberOfChords($_, $arg1);
+		my @nameArtist = IdentifyMusicAndArtistName($_);
+		my $artist = $nameArtist[0];
+		my $music = $nameArtist[1];
+
         if ($result == 1) {
-            print "\n Match! Lyrics: $_.\n\n";
+
+            print "\n Match! Lyrics: '$_' \n\n";
+			print " Details (music | artist): $music | $artist \n\n";
 			$atLeastOne = 1;
         }
     }
@@ -119,10 +131,14 @@ if ($option eq "tune") {
 	my $atLeastOne = 0;
 	foreach (@lyrics) {
         my $result = SearchLyricsByTune($_, $arg1);
+		my @nameArtist = IdentifyMusicAndArtistName($_);
+		my $artist = $nameArtist[0];
+		my $music = $nameArtist[1];
 
         if ($result == 1) {
 			$atLeastOne = 1;
             print "\nLyrics '$_' have the desired tune. \n";
+			print " Details (music | artist): $music | $artist \n\n";
         }
     }
 	if ($atLeastOne == 0) {
@@ -145,8 +161,13 @@ if ($option eq "changeTune")
 	}
     foreach (@lyrics) {
         my $result = ChangeLyricsTune($_, $arg1);
+		my @nameArtist = IdentifyMusicAndArtistName($_);
+		my $artist = $nameArtist[0];
+		my $music = $nameArtist[1];
+
         if ($result == 1) {
             print "\nFile with new tune created with success\n";
+			print " Details (music | artist | new tune): $music | $artist | $arg1 \n\n";
         }
 		else {
 			print "\nFile $_ does not have tune line \n";
@@ -182,9 +203,14 @@ if ($option eq "intro") {
 	my $atLeastOne = 0;
     foreach (@lyrics) {
 	    my $result = CheckIfLyricsHaveIntro($_);
+		my @nameArtist = IdentifyMusicAndArtistName($_);
+		my $artist = $nameArtist[0];
+		my $music = $nameArtist[1];
+
         if ($result == 1) {
 			$atLeastOne = 1;
             print "Lyrics '$_' have an intro\n";
+			print " Details (music | artist): $music | $artist \n\n";
         }
     }
 	if ($atLeastOne == 0) {

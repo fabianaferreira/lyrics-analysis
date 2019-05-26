@@ -24,7 +24,9 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
 our @EXPORT = qw(
-	SearchChordsFromLyrics SearchLyricsByNumberOfChords SearchLyricsByTune ChangeLyricsTune SearchSimilarChordsInDict CheckIfLyricsHaveIntro SearchModifiedChordsInDict SearchMajorOrMinorChordsInDict
+	SearchChordsFromLyrics SearchLyricsByNumberOfChords SearchLyricsByTune ChangeLyricsTune 
+    SearchSimilarChordsInDict CheckIfLyricsHaveIntro SearchModifiedChordsInDict 
+    SearchMajorOrMinorChordsInDict IdentifyMusicAndArtistName
 );
 
 our $VERSION = '0.01';
@@ -96,7 +98,7 @@ sub SearchLyricsByNumberOfChords
         if ($isChordLine == 1) {
             while ($line =~ /([CDEFGAB]?\S+)/g)
             {
-                push (@list, ($1));       
+                push (@list, ($1));
             }
         }
 	}
@@ -354,6 +356,35 @@ sub SearchMajorOrMinorChordsInDict
 	close $fh or die "Error: closing file '$filename'";
 
 	return @list;
+}
+
+sub IdentifyMusicAndArtistName
+{
+    my $path = $_[0];
+	my @result;
+
+    print "dentro da funcao antes do if \n\n";
+
+    if ($path =~ /^\.\/cifras\/(.+)\/(.+)\.txt$/g) {
+        my $artist = $1;
+        my $name = $2;
+
+        # Removing underscores and replacing them with whitespace
+        $artist =~ s/_/ /g;
+        $name =~ s/_/ /g;
+
+
+        print "DEBUG: $artist , $name \n\n";
+
+        # Capitalizing first letter
+        $artist =~ s/^([a-z])/\U$1/;
+        $name =~ s/^([a-z])/\U$1/;
+
+        push (@result, $artist);
+        push (@result, $name);
+    }
+	
+	return @result;
 }
 
 sub AUTOLOAD {
