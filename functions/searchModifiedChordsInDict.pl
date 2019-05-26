@@ -11,7 +11,7 @@ sub SearchModifiedChordsInDict
 
     while (my $line = <$fh>) 
     {
-        while ($line =~ /(.+$modification[^\s]?)/g)
+        while ($line =~ /(.+$modification[^\s]?)\s\d{1}\s\d{1}/g)
         {
             my $chord = $1;
             push (@list, $chord);            

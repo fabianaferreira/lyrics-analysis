@@ -25,11 +25,6 @@ sub TestOption {
 	return 1;
 }
 
-if (not @ARGV) {
-	WarningMessage();
-	exit;
-}
-
 sub TestNumber {
 	my $optionToTest = $_[0];
 	if ($optionToTest =~ /^[+-]?\d+$/) {
@@ -37,6 +32,21 @@ sub TestNumber {
 	}
 	return 0;
 }
+
+sub TestModification {
+	my $optionToTest = $_[0];
+	if ($optionToTest =~ /^[+Mm]$/) {
+		return 1;
+	}
+	return 0;
+}
+
+if (not @ARGV) {
+	WarningMessage();
+	exit;
+}
+
+
 
 # As a way of testing the code without needing to write lyrics' paths, we will use 
 # an array of paths so as to reproduce what it will come from C++ system
@@ -82,8 +92,10 @@ if ($option eq "number") {
 		exit;
 	}
 	my $atLeastOne = 0;
-	if (!TestNumber($arg1)) {
-		print "not a number\n";
+	if (not TestNumber($arg1)) {
+		print "Invalid number of chords. It needs to be a positive integer\n";
+		WarningMessage();
+		exit;
 	}
 	foreach (@lyrics) {
         my $result = SearchLyricsByNumberOfChords($_, $arg1);
@@ -149,9 +161,16 @@ if ($option eq "similar") {
 		exit;
 	}
     @result = SearchSimilarChordsInDict($arg1);
-    foreach (@result) {
-        print "$_\n";
-    }
+	if ($#result + 1 == 0) {
+		print "\nNo similar chords were found in dictionary\n\n";
+	}
+	else {
+		print "\n Similar chords to $arg1 \n\n";
+		foreach (@result) {
+			print "$_\n";
+		}
+		print "\n";
+	}
 }
 
 # CheckIfLyricsHaveIntro
@@ -160,12 +179,17 @@ if ($option eq "intro") {
 		WarningMessage();
 		exit;
 	}
+	my $atLeastOne = 0;
     foreach (@lyrics) {
 	    my $result = CheckIfLyricsHaveIntro($_);
         if ($result == 1) {
+			$atLeastOne = 1;
             print "Lyrics '$_' have an intro\n";
         }
     }
+	if ($atLeastOne == 0) {
+		print "\n No lyrics with intro were found\n\n";
+	}
 }
 
 # SearchModifiedChordsInDict
@@ -174,10 +198,26 @@ if ($option eq "modification") {
 		WarningMessage();
 		exit;
 	}
-	@result = SearchModifiedChordsInDict($arg1);
-	foreach (@result) {
-		print "$_\n";	
+
+	if (not TestNumber($arg1)) {
+		print "\nInvalid type\n\n";
+		WarningMessage();
+		exit;
 	}
+
+	@result = SearchModifiedChordsInDict($arg1);
+
+	# Checks if result array is empty, which corresponds to no occurrences found
+	if ($#result + 1 == 0) {
+		print "\n No chords were found in dictionary with selected modification\n\n";
+	}
+	else {
+		print "\nChords that are modified by $arg1 th\n\n";
+		foreach (@result) {
+			print "$_\n";	
+		}
+		print "\n";
+	}	
 }
 
 # SearchMajorOrMinorChordsInDict
@@ -186,8 +226,18 @@ if ($option eq "majorMinor") {
 		WarningMessage();
 		exit;
 	}
+
+	if (not TestModification($arg1)) {
+		print "\nInvalid type\n\n";
+		WarningMessage();
+		exit;
+	}
+
 	@result = SearchMajorOrMinorChordsInDict($arg1);
+	my $modification = ($arg1 eq "+" or $arg1 eq "M") ? "major" : "minor";
+	print "\nChords that are modified by $modification\n\n";
 	foreach (@result){
         print "$_\n";
 	}
+	print "\n";
 }
