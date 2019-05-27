@@ -124,7 +124,7 @@ if ($option eq "number") {
 
 # SearchLyricsByTune
 if ($option eq "tune") {
-	if (scalar(@ARGV) < 3) {
+	if (scalar(@ARGV) < 2) {
 		WarningMessage();
 		exit;
 	}
@@ -137,12 +137,12 @@ if ($option eq "tune") {
 
         if ($result == 1) {
 			$atLeastOne = 1;
-            print "\nLyrics '$_' have the desired tune. \n";
+            print "\n Lyrics '$_' have the desired tune. \n";
 			print " Details (music | artist): $music | $artist \n\n";
         }
     }
 	if ($atLeastOne == 0) {
-		print "\nThere are no lyrics with desired tune.\n\n"
+		print "\n There are no lyrics with desired tune.\n\n"
 	}
 }
 
@@ -155,7 +155,7 @@ if ($option eq "changeTune")
 		exit;
 	}
 	if (not TestNumber($arg1)) {
-		print "\nInvalid chord offset. It needs to be an integer\n\n";
+		print "\n Invalid chord offset. It needs to be an integer\n\n";
 		WarningMessage();
 		exit;
 	}
@@ -166,11 +166,11 @@ if ($option eq "changeTune")
 		my $music = $nameArtist[1];
 
         if ($result == 1) {
-            print "\nFile with new tune created with success\n";
+            print "\n File with new tune created with success\n";
 			print " Details (music | artist | new tune): $music | $artist | $arg1 \n\n";
         }
 		else {
-			print "\nFile $_ does not have tune line \n";
+			print "\n File $_ does not have tune line \n";
 		}
     }
 }
@@ -183,7 +183,7 @@ if ($option eq "similar") {
 	}
     @result = SearchSimilarChordsInDict($arg1);
 	if ($#result + 1 == 0) {
-		print "\nNo similar chords were found in dictionary\n\n";
+		print "\n No similar chords were found in dictionary\n\n";
 	}
 	else {
 		print "\n Similar chords to $arg1 \n\n";
@@ -209,7 +209,7 @@ if ($option eq "intro") {
 
         if ($result == 1) {
 			$atLeastOne = 1;
-            print "Lyrics '$_' have an intro\n";
+            print " Lyrics '$_' have an intro\n";
 			print " Details (music | artist): $music | $artist \n\n";
         }
     }
@@ -226,7 +226,7 @@ if ($option eq "modification") {
 	}
 
 	if (not TestNumber($arg1)) {
-		print "\nInvalid type\n\n";
+		print "\n Invalid type\n\n";
 		WarningMessage();
 		exit;
 	}
@@ -238,7 +238,7 @@ if ($option eq "modification") {
 		print "\n No chords were found in dictionary with selected modification\n\n";
 	}
 	else {
-		print "\nChords that are modified by $arg1 th\n\n";
+		print "\n Chords that are modified by $arg1 th\n\n";
 		foreach (@result) {
 			print "$_\n";	
 		}
@@ -254,14 +254,14 @@ if ($option eq "majorMinor") {
 	}
 
 	if (not TestModification($arg1)) {
-		print "\nInvalid type\n\n";
+		print "\n Invalid type\n\n";
 		WarningMessage();
 		exit;
 	}
 
 	@result = SearchMajorOrMinorChordsInDict($arg1);
 	my $modification = ($arg1 eq "+" or $arg1 eq "M") ? "major" : "minor";
-	print "\nChords that are modified by $modification\n\n";
+	print "\n Chords that are modified by $modification\n\n";
 	foreach (@result){
         print "$_\n";
 	}

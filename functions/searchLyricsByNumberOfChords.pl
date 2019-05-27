@@ -11,12 +11,12 @@ sub SearchLyricsByNumberOfChords
 
 	while (my $line = <$fh>)
 	{
-        my $isChordLine = checkChordsLinesInFile($line);
+        my $isChordLine = CheckChordsLinesInFile($line);
 
         if ($isChordLine == 1) {
             while ($line =~ /([CDEFGAB]?\S+)/g)
             {
-                push (@list, ($1));       
+                push (@list, ($1));
             }
         }
 	}
@@ -30,6 +30,5 @@ sub SearchLyricsByNumberOfChords
         return 1;
     }
 
-    # print "\n No match! Chords quantity in lyrics '$filename': $chordsQuantity.\n\n";
     return 0;
 }

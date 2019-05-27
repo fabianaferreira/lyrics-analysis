@@ -10,7 +10,7 @@ sub SearchChordsFromLyrics
 
 	while (my $line = <$fh>)
 	{
-		my $isChordLine = checkChordsLinesInFile($line);
+		my $isChordLine = CheckChordsLinesInFile($line);
 
 		if ($isChordLine == 1) {
 			while ($line =~ /([CDEFGAB]?\S+)/g)

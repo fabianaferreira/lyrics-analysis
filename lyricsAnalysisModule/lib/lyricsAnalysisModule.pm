@@ -112,7 +112,6 @@ sub SearchLyricsByNumberOfChords
         return 1;
     }
 
-    # print "\n No match! Chords quantity in lyrics '$filename': $chordsQuantity.\n\n";
     return 0;
 }
 

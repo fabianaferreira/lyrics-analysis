@@ -2,33 +2,12 @@ use strict;
 use warnings;
 require "./checkChordsLinesInFile.pl";
 
-sub getNewChord
-{
-    my $offset = $_[0];
-    my $currentChord = $_[1];
-    my @chords = ("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B");
-
-    # Finds chord index in array
-    my ($tuneIndex) = grep $chords[$_] eq $currentChord, 0 .. $#chords;
-
-    # Normalizes indexes in array range
-    $offset = $offset > 0 ? $offset % 12 :  -(abs($offset) % 12);
-
-    my $newIndex = $tuneIndex + $offset;
-    if ($newIndex < 0) {
-        $newIndex = $newIndex + 12;
-    }
-    elsif ($newIndex > 11) {
-        $newIndex = $newIndex - 12;
-    }
-    return $chords[$newIndex];
-}
-
 sub ChangeLyricsTune
 {
 	my $filename = $_[0];
     my $offset = $_[1];
     my $lyricsTune;
+    my $hasItTune = 0;
 	open (my $fh, $filename) or die "Error: opening file '$filename'";
 
 	while (my $line = <$fh>)
@@ -36,11 +15,14 @@ sub ChangeLyricsTune
         if ($line =~ /(?:tom)\s?:\s?(.+)/gi)
         {
             $lyricsTune = $1;
+            $hasItTune = 1;
             last;
         }
 	}
 
-    print "Lyrics tune: $lyricsTune \n";
+    if ($hasItTune == 0) {
+        return 0;
+    }
 
     # Creating new file that has the same content that the original one
     # but changing lyrics tune and renamed so as to identify it
@@ -53,7 +35,7 @@ sub ChangeLyricsTune
     open(my $f, '>', $resultFile) or die "Error: opening file '$resultFile'";
     
     while (my $line = <$fh>) {
-        my $isChordLine = checkChordsLinesInFile($line);
+        my $isChordLine = CheckChordsLinesInFile($line);
         my $modifiedLine = $line;
         if ($isChordLine == 1) {
             # For each line, we need to find the first part of the chord, so as to 

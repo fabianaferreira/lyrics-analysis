@@ -20,13 +20,3 @@ sub CheckIfLyricsHaveIntro
 
     return $foundIntro;
 }
-
-# my @lyrics = ("./cifras/sandy_junior/era_uma_vez.txt", "./cifras/sandy_junior/imortal.txt", "./cifras/sandy_junior/as_quatro_estacoes.txt", "./cifras/sandy_junior/no_fundo_do_coracao.txt");
-
-# foreach (@lyrics) {
-#     my $result = CheckIfLyricsHaveIntro($_);
-
-#     if ($result == 1) {
-#         print "Lyrics '$_' have an intro\n";
-#     }
-# }
