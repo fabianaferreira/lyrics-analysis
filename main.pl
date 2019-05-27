@@ -83,11 +83,12 @@ if ($option eq "chords") {
 		my $artist = $nameArtist[0];
 		my $music = $nameArtist[1];
 
-        print "Lyrics: '$_'\n";
+        print " Lyrics: '$_'\n";
 		print " Details (music | artist): $music | $artist \n\n";
         foreach my $key (sort {$chords{$b} <=> $chords{$a}} keys %chords) {
         print " $key \t\t \t$chords{$key}\n";
         }
+		print "\n";
     }
 }
 
