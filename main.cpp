@@ -2,7 +2,7 @@
 Universiade Federal do Rio de Janeiro - UFRJ
 Departamento de Engenharia Eletrônica e de Computação - DEL 
 Disciplina de Linguagens de Programação 2019.1
-Trabalho Gerenciador de Busca de Cifras
+Trabalho: Gerenciador de Busca de Cifras
 Alunas: Fabiana Ferreira e Tamine Alves
 */
 
@@ -71,7 +71,7 @@ int main () {
 				cout << "Funcao"<< endl;
 				//chamar  
 				break;
-				
+
 			case 3: 
 				cout << "Funcao"<< endl;
 				//chamar  
