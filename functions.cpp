@@ -1,5 +1,5 @@
-#include <EXTERN.h>
-#include <perl.h>
+#include "/usr/lib/x86_64-linux-gnu/perl/5.26/CORE/EXTERN.h"
+#include "/usr/lib/x86_64-linux-gnu/perl/5.26/CORE/perl.h"
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -55,14 +55,14 @@ int SearchLyricsByTune(PerlInterpreter *my_perl, string tune)
     return result;
 }
 
-void ChangeLyricsTune(PerlInterpreter *my_perl, string filename, int offset)
+int ChangeLyricsTune(PerlInterpreter *my_perl, string filename, int offset)
 {
     dSP;
     ENTER;
     SAVETMPS;
     PUSHMARK(SP);
     XPUSHs(sv_2mortal(newSVpv(filename.c_str(), filename.length())));
-    XPUSHs(sv_2mortal(newSViv(offset));
+    XPUSHs(sv_2mortal(newSViv(offset)));
     PUTBACK;
     int count = call_pv("changeLyricsTune", G_SCALAR);
     SPAGAIN;

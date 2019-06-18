@@ -2,7 +2,7 @@ use open IN => ':std', ':encoding(UTF-8)';  #Using these lines to print special 
 use open OUT => ':utf8';
 use strict;
 use warnings;
-use lyricsAnalysisModule;
+require lyricsAnalysisModule;
 
 sub WarningMessage {
         print "Run the program using one of the following options:\n";
