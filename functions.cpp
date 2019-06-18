@@ -1,11 +1,7 @@
-#include "/usr/lib/x86_64-linux-gnu/perl/5.26/CORE/EXTERN.h"
-#include "/usr/lib/x86_64-linux-gnu/perl/5.26/CORE/perl.h"
+#include "functions.h"
 #include <iostream>
-#include <iomanip>
 #include <string>
 #include <vector>
-#include "functions.h"
-#include "exceptions.h"
 
 using namespace std;
 

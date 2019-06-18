@@ -1,8 +1,8 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include "/usr/lib/x86_64-linux-gnu/perl/5.26/CORE/EXTERN.h"
-#include "/usr/lib/x86_64-linux-gnu/perl/5.26/CORE/perl.h"
+#include "EXTERN.h"
+#include "perl.h"
 #include <string>
 #include <vector>
 
