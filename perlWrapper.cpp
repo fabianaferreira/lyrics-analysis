@@ -1,5 +1,14 @@
+/*
+Universidade Federal do Rio de Janeiro - UFRJ
+Departamento de Engenharia Eletrônica e de Computação - DEL
+Disciplina de Linguagens de Programação 2019.1
+Trabalho: Gerenciador de Busca de Cifras
+Alunas: Fabiana Ferreira e Tamine Alves
+*/
+
 #include "perlWrapper.h"
 
+/*DynaLoader - Dynamically load C libraries into Perl code*/
 EXTERN_C void boot_DynaLoader(pTHX_ CV *cv);
 EXTERN_C void xs_init(pTHX)
 {

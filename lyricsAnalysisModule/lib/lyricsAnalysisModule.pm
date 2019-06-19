@@ -1,3 +1,9 @@
+# Universidade Federal do Rio de Janeiro - UFRJ
+# Departamento de Engenharia Eletrônica e de Computação - DEL 
+# Disciplina de Linguagens de Programação 2019.1
+# Trabalho: Gerenciador de Busca de Cifras
+# Alunas: Fabiana Ferreira e Tamine Alves
+
 package lyricsAnalysisModule;
 
 use 5.026001;

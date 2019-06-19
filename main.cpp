@@ -1,32 +1,24 @@
 /*
 Universidade Federal do Rio de Janeiro - UFRJ
-Departamento de Engenharia Eletrônica e de Computação - DEL 
+Departamento de Engenharia Eletrônica e de Computação - DEL
 Disciplina de Linguagens de Programação 2019.1
 Trabalho: Gerenciador de Busca de Cifras
 Alunas: Fabiana Ferreira e Tamine Alves
 */
 
-#include "functions.h"
 #include <iostream>
 #include <string>
 // #include <iomanip>
 #include <algorithm>
-#include "perlWrapper.h"
+#include "lyricsAnalysis.h"
 
 using namespace std;
 
-static PerlInterpreter *my_perl;
 int opcao = 0;
 
 int main(int argc, char **argv, char **env)
 {
-	// //inicialização
-	PerlWrapper perlWrapper(argc, argv, env, "lyricsAnalysis_v2.pl");
-
-	// //invocação do perl
-	my_perl = perlWrapper.alloc();
-
-	perlWrapper.run();
+	LyricsAnalysis analysis(argc, argv, env, "lyricsAnalysis_v2.pl", "/home/fabiana/Desktop/trabalho-ling-prog/cifras");
 
 	string opString;
 
@@ -36,12 +28,6 @@ int main(int argc, char **argv, char **env)
 		 << "\n\nPrograma desenvolvido em C++ e Perl para Busca de Cifras Musicais."
 		 << "\nAs buscas serão feitas em um banco de dados que contém diretórios organizados por Nome do Artista e sub diretórios com os respectivos nomes de suas músicas, cada uma com suas respectivas cifras.\n"
 		 << "\nTodos os arquivos estao localizados no mesmo diretorio que este programa."
-		 << "\n\nBuscando arquivos...\n"
-		 << endl;
-
-	//função que faz a busca dos diretórios e sub diretórios
-
-	cout << "\nBusca Concluída! Vamos começar.\n\n"
 		 << endl;
 
 	do
@@ -78,8 +64,8 @@ int main(int argc, char **argv, char **env)
 		{
 
 		case 1:
-			cout << "Funcao" << endl;
-			cout << "Resultado: " << SearchLyricsByTune(my_perl, "E") << endl;
+			analysis.ListFiles();
+			// cout << "Resultado: " << analysis.SearchLyricsByTune("E") << endl;
 			break;
 
 		case 2:
@@ -128,6 +114,8 @@ int main(int argc, char **argv, char **env)
 			break;
 		}
 	} while (opcao != 0);
+
+	// delete perlWrapper;
 
 	return 0;
 }
