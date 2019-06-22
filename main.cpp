@@ -10,6 +10,7 @@ Alunas: Fabiana Ferreira e Tamine Alves
 #include <string>
 // #include <iomanip>
 #include <algorithm>
+#include "functions.h"
 #include "lyricsAnalysis.h"
 
 using namespace std;
@@ -18,7 +19,9 @@ int opcao = 0;
 
 int main(int argc, char **argv, char **env)
 {
-	LyricsAnalysis analysis(argc, argv, env, "lyricsAnalysis_v2.pl", "/home/fabiana/Desktop/trabalho-ling-prog/cifras");
+	string path = GetTabsPath(argv[0]);
+	
+	LyricsAnalysis analysis(argc, argv, env, "lyricsAnalysis_v2.pl", path);
 
 	string opString;
 
