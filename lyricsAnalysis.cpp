@@ -36,13 +36,10 @@ LyricsAnalysis::~LyricsAnalysis()
 {
     delete wrapper;
     delete files;
-    delete my_perl;
 }
 
 void LyricsAnalysis::ListFiles()
 {
-    cout << "DEBUG" << endl;
-
     vector<string>::iterator it;
     for (it = files->begin(); it != files->end(); ++it)
     {

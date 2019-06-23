@@ -15,6 +15,7 @@ Alunas: Fabiana Ferreira e Tamine Alves
 #include <stdio.h>
 #include <string.h>
 
+std::string GetTabsPath(std::string);
 void ClearScreen();
 bool GetFilesList(const std::string &, std::vector<std::string> *, const bool);
 

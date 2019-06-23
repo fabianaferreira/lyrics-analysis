@@ -18,7 +18,13 @@ void ClearScreen()
     cout << string(100, '\n');
 }
 
-bool GetFilesList(const string &path, vector<string> *files, const bool showHiddenDirs = false)
+string GetTabsPath(string executablePath) {
+	size_t found = executablePath.find_last_of("/");
+	string path = executablePath.substr(0,found);
+	return  path + "/cifraaas";
+}
+
+bool GetFilesList(const std::string &path, std::vector<std::string> *files, const bool showHiddenDirs = false)
 {
     DIR *dpdf;
     struct dirent *epdf;

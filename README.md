@@ -4,7 +4,9 @@
   System to process text based on regular expressions
 
 #### Instructions to create Perl module
-  * Run the command `h2xs -n lyricsAnalysisModule` inside project's directory
+  * Ensure you have `libperl-dev` installed. If not, run the command: `sudo apt-get install libperl-dev`
+
+  * Run the command `h2xs -n lyricsAnalysisModule` inside `lyricsAnalysisModule` directory
   
   * Copy the file `lyricsAnalysisModule.pm` inside module directory that was created in previous step
   
