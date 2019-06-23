@@ -18,7 +18,7 @@ void ClearScreen()
     cout << string(100, '\n');
 }
 
-bool GetFilesList(const std::string &path, std::vector<std::string> *files, const bool showHiddenDirs = false)
+bool GetFilesList(const string &path, vector<string> *files, const bool showHiddenDirs = false)
 {
     DIR *dpdf;
     struct dirent *epdf;

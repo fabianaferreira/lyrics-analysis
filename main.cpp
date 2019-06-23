@@ -10,6 +10,7 @@ Alunas: Fabiana Ferreira e Tamine Alves
 #include <string>
 // #include <iomanip>
 #include <algorithm>
+#include "functions.h"
 #include "lyricsAnalysis.h"
 
 using namespace std;
@@ -19,6 +20,8 @@ int opcao = 0;
 int main(int argc, char **argv, char **env)
 {
 	LyricsAnalysis analysis(argc, argv, env, "lyricsAnalysis_v2.pl", "/home/fabiana/Desktop/trabalho-ling-prog/cifras");
+
+	vector<string> selectedFiles;
 
 	string opString;
 
@@ -39,7 +42,7 @@ int main(int argc, char **argv, char **env)
 			 << "|                                                              |\n"
 			 << "| 1. Listar músicas com seus respectivos número de acordes;    |\n"
 			 << "| 2. Listar músicas com determinado número de acordes;         |\n"
-			 << "| 3. Listar música tom específico;                             |\n"
+			 << "| 3. Listar músicas com tom específico;                        |\n"
 			 << "| 4. Aumentar ou diminuir o tom de uma música;                 |\n"
 			 << "| 5. Listar acordes similares em dificuldade de execução;      |\n"
 			 << "| 6. Listar músicas que tenham introdução;                     |\n"
@@ -65,43 +68,90 @@ int main(int argc, char **argv, char **env)
 
 		case 1:
 			analysis.ListFiles();
-			// cout << "Resultado: " << analysis.SearchLyricsByTune("E") << endl;
 			break;
 
 		case 2:
-			cout << "Funcao" << endl;
-			//chamar
-			break;
+		{
+			int chords;
+
+			cout << "Digite a quantidade de acordes deseja: ";
+			cin >> chords;
+
+			analysis.ProcessFileList(chords, selectedFiles, &LyricsAnalysis::SearchLyricsByNumberOfChords);
+
+			for (auto const file : selectedFiles)
+			{
+				cout << file << endl;
+			}
+		}
+		break;
 
 		case 3:
-			cout << "Funcao" << endl;
-			//chamar
-			break;
+		{
+			string tune;
+
+			cout << "Digite o tom desejado: ";
+			cin >> tune;
+
+			analysis.ProcessFileList(tune, selectedFiles, &LyricsAnalysis::SearchLyricsByTune);
+
+			for (auto const file : selectedFiles)
+			{
+				cout << file << endl;
+			}
+		}
+
+		break;
 
 		case 4:
-			cout << "Funcao" << endl;
-			//chamar
-			break;
+		{
+			int offset;
+			string filename;
+
+			cout << "Digite o offset desejado: ";
+			cin >> offset;
+
+			cout << "Digite o caminho completo para o arquivo: ";
+			cin >> filename;
+
+			//CHECAR SE CAMINHO EH VALIDO
+
+			if (analysis.ChangeLyricsTune(filename, offset) == 1)
+			{
+				cout << "Arquivo com alteracao de tom criado com sucesso!" << endl;
+			}
+			else
+			{
+				cout << "Nao foi possivel criar o arquivo" << endl;
+			}
+		}
+		break;
 
 		case 5:
-			cout << "Funcao" << endl;
-			//chamar
-			break;
+		{
+			string chord;
+
+			cout << "Digite o acorde para procura de similares no dicionario: ";
+			cin >> chord;
+
+			analysis.SearchSimilarChordsInDict(chord);
+		}
+		break;
 
 		case 6:
-			cout << "Funcao" << endl;
-			//chamar
-			break;
+		{
+		}
+		break;
 
 		case 7:
-			cout << "Funcao" << endl;
-			//chamar
-			break;
+		{
+		}
+		break;
 
 		case 8:
-			cout << "Funcao" << endl;
-			//chamar
-			break;
+		{
+		}
+		break;
 
 		case 0:
 			cout << "Programa Encerrado\n\n"
@@ -113,9 +163,8 @@ int main(int argc, char **argv, char **env)
 				 << "Tente novamente.\n";
 			break;
 		}
-	} while (opcao != 0);
 
-	// delete perlWrapper;
+	} while (opcao != 0);
 
 	return 0;
 }

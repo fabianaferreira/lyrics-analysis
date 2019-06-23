@@ -74,9 +74,29 @@ void LyricsAnalysis::ListFiles()
 //     LEAVE;
 // }
 
-int LyricsAnalysis::SearchLyricsByTune(string tune)
+int LyricsAnalysis::SearchLyricsByNumberOfChords(string filename, int number)
 {
-    string filename = "/home/fabiana/Desktop/trabalho-ling-prog/cifras/sandy_junior/no_fundo_do_coracao.txt";
+    dSP;
+    ENTER;
+    SAVETMPS;
+    PUSHMARK(SP);
+    XPUSHs(sv_2mortal(newSVpv(filename.c_str(), filename.length())));
+    XPUSHs(sv_2mortal(newSVuv(number)));
+    PUTBACK;
+    int count = call_pv("searchLyricsByNumberOfChords", G_SCALAR);
+    SPAGAIN;
+
+    int result = POPi;
+
+    PUTBACK;
+    FREETMPS;
+    LEAVE;
+
+    return result;
+}
+
+int LyricsAnalysis::SearchLyricsByTune(string filename, string tune)
+{
     dSP;
     ENTER;
     SAVETMPS;
@@ -117,6 +137,53 @@ int LyricsAnalysis::ChangeLyricsTune(string filename, int offset)
     return result;
 }
 
+int LyricsAnalysis::CheckIfLyricsHaveIntro(string filename)
+{
+    dSP;
+    ENTER;
+    SAVETMPS;
+    PUSHMARK(SP);
+    XPUSHs(sv_2mortal(newSVpv(filename.c_str(), filename.length())));
+    PUTBACK;
+    int count = call_pv("checkIfLyricsHaveIntro", G_SCALAR);
+    SPAGAIN;
+
+    int result = POPi;
+
+    return result;
+
+    PUTBACK;
+    FREETMPS;
+    LEAVE;
+}
+
+int LyricsAnalysis::IdentifyMusicAndArtistName(string path)
+{
+    dSP;
+    ENTER;
+    SAVETMPS;
+    PUSHMARK(SP);
+    XPUSHs(sv_2mortal(newSVpv(path.c_str(), path.length())));
+    PUTBACK;
+    int count = call_pv("identifyMusicAndArtistName", G_ARRAY);
+    SPAGAIN;
+
+    if (count > 0)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            char *return_value = POPp;
+            cout << return_value << endl;
+        }
+        return 1;
+    }
+    return 0;
+
+    PUTBACK;
+    FREETMPS;
+    LEAVE;
+}
+
 void LyricsAnalysis::SearchSimilarChordsInDict(string chord)
 {
     dSP;
@@ -132,29 +199,6 @@ void LyricsAnalysis::SearchSimilarChordsInDict(string chord)
     {
         char *return_value = POPp;
         cout << return_value << endl;
-    }
-
-    PUTBACK;
-    FREETMPS;
-    LEAVE;
-}
-
-void LyricsAnalysis::CheckIfLyricsHaveIntro(string filename)
-{
-    dSP;
-    ENTER;
-    SAVETMPS;
-    PUSHMARK(SP);
-    XPUSHs(sv_2mortal(newSVpv(filename.c_str(), filename.length())));
-    PUTBACK;
-    int count = call_pv("checkIfLyricsHaveIntro", G_SCALAR);
-    SPAGAIN;
-
-    int result = POPi;
-
-    if (result == 1)
-    {
-        cout << "Lyrics with intro: " << filename << endl;
     }
 
     PUTBACK;
@@ -206,24 +250,30 @@ void LyricsAnalysis::SearchMajorOrMinorChordsInDict(string modification)
     LEAVE;
 }
 
-void LyricsAnalysis::IdentifyMusicAndArtistName(string path)
+void LyricsAnalysis::ProcessFileList(int argument, vector<string> &selectedFiles,
+                                     int (LyricsAnalysis::*f)(string, int))
 {
-    dSP;
-    ENTER;
-    SAVETMPS;
-    PUSHMARK(SP);
-    XPUSHs(sv_2mortal(newSVpv(path.c_str(), path.length())));
-    PUTBACK;
-    int count = call_pv("identifyMusicAndArtistName", G_ARRAY);
-    SPAGAIN;
-
-    for (int i = 0; i < count; i++)
+    // Clears vector, so as not to contains previous results as elements
+    selectedFiles.clear();
+    for (auto const file : *files)
     {
-        char *return_value = POPp;
-        cout << return_value << endl;
+        if ((this->*f)(file, argument) == 1)
+        {
+            selectedFiles.push_back(file);
+        }
     }
+}
 
-    PUTBACK;
-    FREETMPS;
-    LEAVE;
+void LyricsAnalysis::ProcessFileList(string argument, vector<string> &selectedFiles,
+                                     int (LyricsAnalysis::*f)(string, string))
+{
+    // Clears vector, so as not to contains previous results as elements
+    selectedFiles.clear();
+    for (auto const file : *files)
+    {
+        if ((this->*f)(file, argument) == 1)
+        {
+            selectedFiles.push_back(file);
+        }
+    }
 }

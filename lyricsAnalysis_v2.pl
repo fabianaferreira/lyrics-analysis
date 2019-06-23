@@ -21,6 +21,11 @@ sub searchLyricsByTune
 	return SearchLyricsByTune($_[0], $_[1]);
 }
 
+sub searchLyricsByNumberOfChords 
+{
+	return SearchLyricsByNumberOfChords($_[0], $_[1]);
+}
+
 sub changeLyricsTune
 {
 	return ChangeLyricsTune($_[0], $_[1]);
@@ -51,6 +56,6 @@ sub identifyMusicAndArtistName
 	return IdentifyMusicAndArtistName($_[0]);
 }
 
-# my $result = searchLyricsByTune("/home/fabiana/Desktop/trabalho-ling-prog/cifras/sandy_junior/no_fundo_do_coracao.txt", "E");
+# my $result = searchLyricsByNumberOfChords("/home/fabiana/Desktop/trabalho-ling-prog/cifras/sandy_junior/no_fundo_do_coracao.txt", 3);
 
 # print $result;
