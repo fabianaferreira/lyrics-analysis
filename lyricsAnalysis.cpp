@@ -277,7 +277,7 @@ void LyricsAnalysis::ProcessFileList(int argument, vector<string> &selectedFiles
 {
     // Clears vector, so as not to contains previous results as elements
     selectedFiles.clear();
-    for (auto const file : *files)
+    for (auto const string file : *files)
     {
         if ((this->*f)(file, argument) == 1)
         {
@@ -291,7 +291,7 @@ void LyricsAnalysis::ProcessFileList(string argument, vector<string> &selectedFi
 {
     // Clears vector, so as not to contains previous results as elements
     selectedFiles.clear();
-    for (auto const file : *files)
+    for (auto const string file : *files)
     {
         if ((this->*f)(file, argument) == 1)
         {

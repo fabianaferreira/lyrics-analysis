@@ -49,3 +49,56 @@ bool GetFilesList(const std::string &path, std::vector<std::string> *files, cons
     }
     return false;
 }
+
+int getNumberOfChords(){
+    int numberOfChords = 0;
+
+    while (numberOfChords < 0) {
+        cout << "Entre com o número de acordes desejado." << endl;
+        cout << "Retornaremos uma lista com as músicas que possuem essa quantidade de acordes." << endl;
+        cin >> numberOfChords;
+        cout << "Entrada inválida." << endl; 
+        cout << "\n Entre com um inteiro positivo ou com 0 para voltar ao menu." << endl;
+    }
+    return numberOfChords;
+}
+
+string getTune() {
+    string optTune;
+
+    cout << "Insira o tom desejado, procuraremos músicas com esse tom pra você." << endl;
+    cin >> optTune;
+
+    return optTune;
+}
+
+int getOffset() {
+    int offset;
+
+    while (offset < -20 || offset > 20) {
+	cout << "Digite o offset desejado (deve ser um inteiro). ";
+    cout << "Criaremos um rquivo com alteracao de tom!" << endl;
+	cin >> offset;
+    cout << "Entrada inválida." << endl; 
+    cout << "\n Entre com outro inteiro ou com 0 para voltar ao menu." << endl;
+    }
+    return offset;
+}
+
+string getFileName() {
+    string filename;
+	
+    cout << "Digite o caminho completo para o arquivo: ";		
+    cin >> filename;
+
+    return filename;
+}
+
+string getChord() {
+    string chord;
+	
+    cout << "Digite o acorde desejado: ";		
+    cin >> chord;
+
+    return chord;
+}

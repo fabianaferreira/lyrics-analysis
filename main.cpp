@@ -15,7 +15,7 @@ Alunas: Fabiana Ferreira e Tamine Alves
 
 using namespace std;
 
-int opcao = 0;
+int optMenu = 0;
 
 int main(int argc, char **argv, char **env)
 {
@@ -63,9 +63,9 @@ int main(int argc, char **argv, char **env)
 			getline(cin, opString);
 		}
 
-		opcao = opString[0] - '0';
+		optMenu = opString[0] - '0';
 
-		switch (opcao)
+		switch (optMenu)
 		{
 
 		case 1:
@@ -75,100 +75,57 @@ int main(int argc, char **argv, char **env)
 		break;
 
 		case 2:
-		{
-			int chords;
+			analysis.ProcessFileList(getNumberOfChords(), selectedFiles, &LyricsAnalysis::SearchLyricsByNumberOfChords);
 
-			cout << "Digite a quantidade de acordes deseja: ";
-			cin >> chords;
-
-			analysis.ProcessFileList(chords, selectedFiles, &LyricsAnalysis::SearchLyricsByNumberOfChords);
-
-			for (auto const file : selectedFiles)
-			{
+			for (auto const  string file : selectedFiles){
 				cout << file << endl;
 			}
-		}
 		break;
 
 		case 3:
-		{
-			string tune;
+			analysis.ProcessFileList(getTune(), selectedFiles, &LyricsAnalysis::SearchLyricsByTune);
 
-			cout << "Digite o tom desejado: ";
-			cin >> tune;
-
-			analysis.ProcessFileList(tune, selectedFiles, &LyricsAnalysis::SearchLyricsByTune);
-
-			for (auto const file : selectedFiles)
-			{
+			for (auto const string file : selectedFiles) {
 				cout << file << endl;
 			}
-		}
-
 		break;
-
+	
 		case 4:
-		{
-			int offset;
-			string filename;
-
-			cout << "Digite o offset desejado: ";
-			cin >> offset;
-
-			cout << "Digite o caminho completo para o arquivo: ";
-			cin >> filename;
-
-			//CHECAR SE CAMINHO EH VALIDO
-
-			if (analysis.ChangeLyricsTune(filename, offset) == 1)
-			{
-				cout << "Arquivo com alteracao de tom criado com sucesso!" << endl;
+			if (analysis.ChangeLyricsTune(getFileName(), getOffset()) == 1){
+				cout << "Arquivo criado com sucesso!" << endl;
 			}
-			else
-			{
+			else {
 				cout << "Nao foi possivel criar o arquivo" << endl;
 			}
-		}
 		break;
-
+	
 		case 5:
-		{
-			string chord;
-
-			cout << "Digite o acorde para procura de similares no dicionario: ";
-			cin >> chord;
-
-			analysis.SearchSimilarChordsInDict(chord);
-		}
+			analysis.SearchSimilarChordsInDict(getChord ());
 		break;
 
-		case 6:
-		{
-		}
+		case 6:		
+//qual entrada dessa função?
+//			analysis.CheckIfLyricsHaveIntro( );
 		break;
 
 		case 7:
-		{
-		}
 		break;
 
 		case 8:
-		{
-		}
 		break;
-
+		
 		case 0:
 			cout << "Programa Encerrado\n\n"
 				 << endl;
-			break;
+		break;
 
 		default:
 			cout << "Nao eh uma opcao valida. \n"
 				 << "Tente novamente.\n";
 			break;
 		}
-
-	} while (opcao != 0);
-
+		} while (optMenu != 0);
+	
 	return 0;
+	
 }
