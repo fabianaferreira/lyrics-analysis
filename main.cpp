@@ -15,7 +15,7 @@ Alunas: Fabiana Ferreira e Tamine Alves
 
 using namespace std;
 
-int opcao = 0;
+int optMenu = 0;
 
 int main(int argc, char **argv, char **env)
 {
@@ -63,9 +63,9 @@ int main(int argc, char **argv, char **env)
 			getline(cin, opString);
 		}
 
-		opcao = opString[0] - '0';
+		optMenu = opString[0] - '0';
 
-		switch (opcao)
+		switch (optMenu)
 		{
 
 		case 1:
@@ -74,12 +74,7 @@ int main(int argc, char **argv, char **env)
 
 		case 2:
 		{
-			int chords;
-
-			cout << "Digite a quantidade de acordes deseja: ";
-			cin >> chords;
-
-			analysis.ProcessFileList(chords, selectedFiles, &LyricsAnalysis::SearchLyricsByNumberOfChords);
+			analysis.ProcessFileList(getNumberOfChords(), selectedFiles, &LyricsAnalysis::SearchLyricsByNumberOfChords);
 
 			for (auto const file : selectedFiles)
 			{
@@ -90,12 +85,7 @@ int main(int argc, char **argv, char **env)
 
 		case 3:
 		{
-			string tune;
-
-			cout << "Digite o tom desejado: ";
-			cin >> tune;
-
-			analysis.ProcessFileList(tune, selectedFiles, &LyricsAnalysis::SearchLyricsByTune);
+			analysis.ProcessFileList(getTune(), selectedFiles, &LyricsAnalysis::SearchLyricsByTune);
 
 			for (auto const file : selectedFiles)
 			{
@@ -129,6 +119,7 @@ int main(int argc, char **argv, char **env)
 		}
 		break;
 
+		//Listar acordes similares em dificuldade de execução;
 		case 5:
 		{
 			string chord;
@@ -165,8 +156,7 @@ int main(int argc, char **argv, char **env)
 				 << "Tente novamente.\n";
 			break;
 		}
-
-	} while (opcao != 0);
+	} while (optMenu != 0);
 
 	return 0;
 }

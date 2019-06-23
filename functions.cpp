@@ -49,3 +49,28 @@ bool GetFilesList(const std::string &path, std::vector<std::string> *files, cons
     }
     return false;
 }
+
+int getNumberOfChords(){
+    int numberOfChords = 0;
+
+    cin >> numberOfChords;
+
+    if ( numberChords <= 0) {
+        cout << "Entrada inválida." << endl;     
+    }
+    else {
+        return numberOfChords;
+    }
+    return 0;
+}
+
+string getTune () {
+    string optTune;
+
+    cout << "Insira o tom desejado, procuraremos músicas com esse tom pra você." << endl;
+    cin >> optTune;
+
+    return optTune;
+}
+
+
