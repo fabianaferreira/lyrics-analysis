@@ -36,6 +36,7 @@ LyricsAnalysis::~LyricsAnalysis()
 {
     delete wrapper;
     delete files;
+    delete my_perl;
 }
 
 void LyricsAnalysis::ListFiles()
@@ -47,29 +48,31 @@ void LyricsAnalysis::ListFiles()
     }
 }
 
-// void LyricsAnalysis::SearchChordsFromLyrics(string filename, string chord)
-// {
-//     dSP;
-//     ENTER;
-//     SAVETMPS;
-//     PUSHMARK(SP);
-//     XPUSHs(sv_2mortal(newSVpv(filename.c_str(), filename.length()))); // Passa a string e o tamanho
-//     XPUSHs(sv_2mortal(newSVpv(chord.c_str(), chord.length())));       // Passa a string e o tamanho
+vector<string> LyricsAnalysis::SearchChordsFromLyrics(string filename)
+{
+    vector<string> result;
+    dSP;
+    ENTER;
+    SAVETMPS;
+    PUSHMARK(SP);
+    XPUSHs(sv_2mortal(newSVpv(filename.c_str(), filename.length()))); // Passa a string e o tamanho
 
-//     PUTBACK;
-//     int count = call_pv("searchChordsFromLyrics", G_ARRAY); // Count guarda quantas coisas foram retornadas, cada um é elemento da string
-//     SPAGAIN;
+    PUTBACK;
+    int count = call_pv("searchChordsFromLyrics", G_ARRAY); // Count guarda quantas coisas foram retornadas, cada um é elemento da string
+    SPAGAIN;
 
-//     for (int i = 0; i < count; i++)
-//     {
-//         string return_value = POPp;
-//         cout << return_value << endl;
-//     }
+    for (int i = 0; i < count; i++)
+    {
+        string return_value = POPp;
+        result.push_back(return_value);
+    }
 
-//     PUTBACK;
-//     FREETMPS;
-//     LEAVE;
-// }
+    return result;
+
+    PUTBACK;
+    FREETMPS;
+    LEAVE;
+}
 
 int LyricsAnalysis::SearchLyricsByNumberOfChords(string filename, int number)
 {
@@ -245,6 +248,28 @@ void LyricsAnalysis::SearchMajorOrMinorChordsInDict(string modification)
     PUTBACK;
     FREETMPS;
     LEAVE;
+}
+
+void LyricsAnalysis::ProcessFileList(vector<string> (LyricsAnalysis::*f)(string))
+{
+    vector<string> result;
+    unsigned counter = 0;
+    for (auto const file : *files)
+    {
+        cout << "** ------ Arquivo: " << file << "----- **" << endl;
+
+        result = (this->*f)(file);
+
+        for (auto str : result)
+        {
+            if (counter % 2 == 0)
+                cout << "Acorde " << str << ": ";
+            else
+                cout << str << endl;
+            counter++;
+        }
+        counter = 0;
+    }
 }
 
 void LyricsAnalysis::ProcessFileList(int argument, vector<string> &selectedFiles,

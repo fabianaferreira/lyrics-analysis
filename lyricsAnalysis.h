@@ -21,7 +21,7 @@ public:
     ~LyricsAnalysis();
 
     //Methods that use lyrics files processing
-    void SearchChordsFromLyrics(std::string, std::string);
+    std::vector<std::string> SearchChordsFromLyrics(std::string);
     int SearchLyricsByTune(std::string, std::string);
     int SearchLyricsByNumberOfChords(std::string, int);
     int ChangeLyricsTune(std::string, int);
@@ -40,6 +40,8 @@ public:
       It is used so as not to write in main function repeated loops and using the fact
       that there is a private attribute that contains the filenames, which avoids using getters
     */
+    void ProcessFileList(std::vector<std::string> (LyricsAnalysis::*f)(std::string));
+
     void ProcessFileList(int, std::vector<std::string> &,
                          int (LyricsAnalysis::*f)(std::string, int));
 

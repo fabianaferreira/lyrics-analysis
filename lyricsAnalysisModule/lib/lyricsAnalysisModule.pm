@@ -66,6 +66,9 @@ sub CheckChordsLinesInFile
 sub SearchChordsFromLyrics
 {
 	my %list;
+
+    my @array = ();
+
 	my $filename = $_[0];
 	open (my $fh, $filename) or die "Error: opening file '$filename'";
 
@@ -87,9 +90,19 @@ sub SearchChordsFromLyrics
 		}
 	}
 
+    # foreach my $value (sort {$b <=> $a} values %list) {
+    #     say $value;
+    # }
+
+    foreach my $key (keys %list)
+    {
+        push(@array, $list{$key});
+        push(@array, $key);
+    }
+
 	close $fh or die "Error: closing file '$filename'";
 
-	return %list;
+	return @array;
 }
 
 sub SearchLyricsByNumberOfChords

@@ -20,7 +20,7 @@ int opcao = 0;
 int main(int argc, char **argv, char **env)
 {
 	string path = GetTabsPath(argv[0]);
-	
+
 	LyricsAnalysis analysis(argc, argv, env, "lyricsAnalysis_v2.pl", path);
 
 	vector<string> selectedFiles;
@@ -69,8 +69,10 @@ int main(int argc, char **argv, char **env)
 		{
 
 		case 1:
-			analysis.ListFiles();
-			break;
+		{
+			analysis.ProcessFileList(&LyricsAnalysis::SearchChordsFromLyrics);
+		}
+		break;
 
 		case 2:
 		{

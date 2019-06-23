@@ -11,10 +11,10 @@ use warnings;
 
 use lyricsAnalysisModule;
 
-# sub searchChordsFromLyrics
-# {
-# 	my %hash = SearchChordsFromLyrics ($_[0]);
-# }
+sub searchChordsFromLyrics
+{
+	return SearchChordsFromLyrics($_[0]);
+}
 
 sub searchLyricsByTune
 {
@@ -56,6 +56,13 @@ sub identifyMusicAndArtistName
 	return IdentifyMusicAndArtistName($_[0]);
 }
 
-# my $result = searchLyricsByNumberOfChords("/home/fabiana/Desktop/trabalho-ling-prog/cifras/sandy_junior/no_fundo_do_coracao.txt", 3);
 
+# --------------------------------------- DEBUG ------------------------------------
+
+# my @result = searchChordsFromLyrics("/home/fabiana/Desktop/trabalho-ling-prog/cifras/sandy_junior/no_fundo_do_coracao.txt");
+
+# foreach (@result) 
+# {
+# 	print ($_);
+# }
 # print $result;

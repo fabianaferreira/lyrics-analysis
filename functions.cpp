@@ -21,7 +21,7 @@ void ClearScreen()
 string GetTabsPath(string executablePath) {
 	size_t found = executablePath.find_last_of("/");
 	string path = executablePath.substr(0,found);
-	return  path + "/cifraaas";
+	return  path + "/cifras";
 }
 
 bool GetFilesList(const std::string &path, std::vector<std::string> *files, const bool showHiddenDirs = false)
