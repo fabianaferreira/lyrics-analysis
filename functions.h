@@ -19,4 +19,11 @@ std::string GetTabsPath(std::string);
 void ClearScreen();
 bool GetFilesList(const std::string &, std::vector<std::string> *, const bool);
 
+int getNumberOfChords();
+std::string getTune();
+int getOffset();
+std::string getFileName();
+std::string getChord();
+
+
 #endif

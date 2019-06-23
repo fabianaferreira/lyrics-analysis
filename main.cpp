@@ -71,92 +71,59 @@ int main(int argc, char **argv, char **env)
 		case 1:
 			analysis.ListFiles();
 			break;
-
+	
 		case 2:
-		{
 			analysis.ProcessFileList(getNumberOfChords(), selectedFiles, &LyricsAnalysis::SearchLyricsByNumberOfChords);
 
-			for (auto const file : selectedFiles)
-			{
+			for (auto const  string file : selectedFiles){
 				cout << file << endl;
 			}
-		}
 		break;
 
 		case 3:
-		{
 			analysis.ProcessFileList(getTune(), selectedFiles, &LyricsAnalysis::SearchLyricsByTune);
 
-			for (auto const file : selectedFiles)
-			{
+			for (auto const string file : selectedFiles) {
 				cout << file << endl;
 			}
-		}
-
 		break;
-
+	
 		case 4:
-		{
-			int offset;
-			string filename;
-
-			cout << "Digite o offset desejado: ";
-			cin >> offset;
-
-			cout << "Digite o caminho completo para o arquivo: ";
-			cin >> filename;
-
-			//CHECAR SE CAMINHO EH VALIDO
-
-			if (analysis.ChangeLyricsTune(filename, offset) == 1)
-			{
-				cout << "Arquivo com alteracao de tom criado com sucesso!" << endl;
+			if (analysis.ChangeLyricsTune(getFileName(), getOffset()) == 1){
+				cout << "Arquivo criado com sucesso!" << endl;
 			}
-			else
-			{
+			else {
 				cout << "Nao foi possivel criar o arquivo" << endl;
 			}
-		}
 		break;
-
-		//Listar acordes similares em dificuldade de execução;
+	
 		case 5:
-		{
-			string chord;
-
-			cout << "Digite o acorde para procura de similares no dicionario: ";
-			cin >> chord;
-
-			analysis.SearchSimilarChordsInDict(chord);
-		}
+			analysis.SearchSimilarChordsInDict(getChord ());
 		break;
 
-		case 6:
-		{
-		}
+		case 6:		
+//qual entrada dessa função?
+//			analysis.CheckIfLyricsHaveIntro( );
 		break;
 
 		case 7:
-		{
-		}
 		break;
 
 		case 8:
-		{
-		}
 		break;
-
+		
 		case 0:
 			cout << "Programa Encerrado\n\n"
 				 << endl;
-			break;
+		break;
 
 		default:
 			cout << "Nao eh uma opcao valida. \n"
 				 << "Tente novamente.\n";
 			break;
 		}
-	} while (optMenu != 0);
-
+		} while (optMenu != 0);
+	
 	return 0;
+	
 }
