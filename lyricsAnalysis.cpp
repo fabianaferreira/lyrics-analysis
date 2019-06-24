@@ -11,7 +11,7 @@ Alunas: Fabiana Ferreira e Tamine Alves
 
 using namespace std;
 
-LyricsAnalysis::LyricsAnalysis(int argc, char **argv, char **env, char *filename, const std::string &path)
+LyricsAnalysis::LyricsAnalysis(int argc, char **argv, char **env, char *filename)
 {
     wrapper = new PerlWrapper(argc, argv, env, filename);
     my_perl = wrapper->alloc();
@@ -19,24 +19,24 @@ LyricsAnalysis::LyricsAnalysis(int argc, char **argv, char **env, char *filename
 
     files = new vector<string>();
 
-    //Getting files' list
-    cout << "\n\nBuscando arquivos..." << endl;
-    if (GetFilesList(path, files, false))
-    {
-        cout << "\nBusca Concluída! Vamos começar.\n\n"
-             << endl;
-    }
-    else
-    {
-        cout << "Houve um problema na leitura do arquivo" << endl;
-        //JOGAR EXCECAO
-    }
+    // //Getting files' list
+    // cout << "\n\nBuscando arquivos..." << endl;
+    // if (GetFilesList(path, files, false))
+    // {
+    //     cout << "\nBusca Concluída! Vamos começar.\n\n"
+    //          << endl;
+    // }
+    // else
+    // {
+    //     cout << "Houve um problema na leitura do arquivo" << endl;
+    //     //JOGAR EXCECAO
+    // }
 }
+
 LyricsAnalysis::~LyricsAnalysis()
 {
     delete wrapper;
     delete files;
-    delete my_perl;
 }
 
 void LyricsAnalysis::ListFiles()
@@ -45,6 +45,21 @@ void LyricsAnalysis::ListFiles()
     for (it = files->begin(); it != files->end(); ++it)
     {
         cout << (*it) << endl;
+    }
+}
+
+void LyricsAnalysis::SetFilesList(const string &path)
+{
+    //Getting files' list
+    cout << "\n\nBuscando arquivos..." << endl;
+    if (getFilesList(path, files, false))
+    {
+        cout << "\nBusca Concluída! Vamos começar.\n"
+             << endl;
+    }
+    else
+    {
+        throw InvalidFilePath();
     }
 }
 
@@ -157,8 +172,9 @@ int LyricsAnalysis::CheckIfLyricsHaveIntro(string filename)
     LEAVE;
 }
 
-int LyricsAnalysis::IdentifyMusicAndArtistName(string path)
+vector<string> LyricsAnalysis::IdentifyMusicAndArtistName(string path)
 {
+    vector<string> result;
     dSP;
     ENTER;
     SAVETMPS;
@@ -172,12 +188,11 @@ int LyricsAnalysis::IdentifyMusicAndArtistName(string path)
     {
         for (int i = 0; i < count; i++)
         {
-            char *return_value = POPp;
-            cout << return_value << endl;
+            string return_value = POPp;
+            result.push_back(return_value);
         }
-        return 1;
     }
-    return 0;
+    return result;
 
     PUTBACK;
     FREETMPS;
@@ -206,13 +221,13 @@ void LyricsAnalysis::SearchSimilarChordsInDict(string chord)
     LEAVE;
 }
 
-void LyricsAnalysis::SearchModifiedChordsInDict(string modification)
+void LyricsAnalysis::SearchModifiedChordsInDict(char modification)
 {
     dSP;
     ENTER;
     SAVETMPS;
     PUSHMARK(SP);
-    XPUSHs(sv_2mortal(newSVpv(modification.c_str(), modification.length())));
+    XPUSHs(sv_2mortal(newSVpv(&modification, strlen(&modification))));
     PUTBACK;
     int count = call_pv("searchModifiedChordsInDict", G_ARRAY);
     SPAGAIN;
@@ -228,13 +243,13 @@ void LyricsAnalysis::SearchModifiedChordsInDict(string modification)
     LEAVE;
 }
 
-void LyricsAnalysis::SearchMajorOrMinorChordsInDict(string modification)
+void LyricsAnalysis::SearchMajorOrMinorChordsInDict(char modification)
 {
     dSP;
     ENTER;
     SAVETMPS;
     PUSHMARK(SP);
-    XPUSHs(sv_2mortal(newSVpv(modification.c_str(), modification.length())));
+    XPUSHs(sv_2mortal(newSVpv(&modification, strlen(&modification))));
     PUTBACK;
     int count = call_pv("searchMajorOrMinorChordsInDict", G_ARRAY);
     SPAGAIN;
@@ -248,6 +263,18 @@ void LyricsAnalysis::SearchMajorOrMinorChordsInDict(string modification)
     PUTBACK;
     FREETMPS;
     LEAVE;
+}
+
+void LyricsAnalysis::ProcessFileList(vector<string> &selectedFiles, int (LyricsAnalysis::*f)(string))
+{
+    int result;
+    selectedFiles.clear();
+    for (auto const file : *files)
+    {
+        result = (this->*f)(file);
+        if (result == 1)
+            selectedFiles.push_back(file);
+    }
 }
 
 void LyricsAnalysis::ProcessFileList(vector<string> (LyricsAnalysis::*f)(string))
@@ -277,7 +304,7 @@ void LyricsAnalysis::ProcessFileList(int argument, vector<string> &selectedFiles
 {
     // Clears vector, so as not to contains previous results as elements
     selectedFiles.clear();
-    for (auto const string file : *files)
+    for (auto const file : *files)
     {
         if ((this->*f)(file, argument) == 1)
         {
@@ -291,7 +318,7 @@ void LyricsAnalysis::ProcessFileList(string argument, vector<string> &selectedFi
 {
     // Clears vector, so as not to contains previous results as elements
     selectedFiles.clear();
-    for (auto const string file : *files)
+    for (auto const file : *files)
     {
         if ((this->*f)(file, argument) == 1)
         {

@@ -383,7 +383,7 @@ sub IdentifyMusicAndArtistName
     my $path = $_[0];
 	my @result;
 
-    if ($path =~ /^\.\/cifras\/(.+)\/(.+)\.txt$/g) {
+    if ($path =~ /^.*\/cifras\/(.+)\/(.+)\.txt$/g) {
         my $artist = $1;
         my $name = $2;
 

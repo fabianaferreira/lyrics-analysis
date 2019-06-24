@@ -6,25 +6,50 @@ Trabalho: Gerenciador de Busca de Cifras
 Alunas: Fabiana Ferreira e Tamine Alves
 */
 
-#include "functions.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
+#include "functions.h"
 
 using namespace std;
 
-void ClearScreen()
+void clearScreen()
 {
     cout << string(100, '\n');
 }
 
-string GetTabsPath(string executablePath) {
-	size_t found = executablePath.find_last_of("/");
-	string path = executablePath.substr(0,found);
-	return  path + "/cifras";
+void getKeyPressed()
+{
+    cin.ignore();
+    cout << "\n\nPressione qualquer tecla para exibir o menu novamente...";
+    getchar();
 }
 
-bool GetFilesList(const std::string &path, std::vector<std::string> *files, const bool showHiddenDirs = false)
+string getTabsPath(string executablePath)
+{
+    string path;
+    char directoryOption;
+
+    cout << "Voce deseja selecionar um diretorio existente das cifras? (y/n) ";
+    cin >> directoryOption;
+
+    if (directoryOption == 'y')
+    {
+        cout << "Digite o caminho completo do diretorio: ";
+        cin >> path;
+        return path;
+    }
+    if (directoryOption == 'n')
+    {
+        size_t found = executablePath.find_last_of("/");
+        string path = executablePath.substr(0, found);
+        return path + "/cifras";
+    }
+    throw InvalidOption();
+}
+
+bool getFilesList(const std::string &path, std::vector<std::string> *files, const bool showHiddenDirs = false)
 {
     DIR *dpdf;
     struct dirent *epdf;
@@ -35,7 +60,7 @@ bool GetFilesList(const std::string &path, std::vector<std::string> *files, cons
         {
             if (showHiddenDirs ? (epdf->d_type == DT_DIR && string(epdf->d_name) != ".." && string(epdf->d_name) != ".") : (epdf->d_type == DT_DIR && strstr(epdf->d_name, "..") == NULL && strstr(epdf->d_name, ".") == NULL))
             {
-                GetFilesList(path + "/" + epdf->d_name, files, showHiddenDirs);
+                getFilesList(path + "/" + epdf->d_name, files, showHiddenDirs);
             }
             if (epdf->d_type == DT_REG)
             {
@@ -50,55 +75,90 @@ bool GetFilesList(const std::string &path, std::vector<std::string> *files, cons
     return false;
 }
 
-int getNumberOfChords(){
-    int numberOfChords = 0;
+int getNumberOfChords()
+{
+    int numberOfChords;
 
-    while (numberOfChords < 0) {
-        cout << "Entre com o número de acordes desejado." << endl;
-        cout << "Retornaremos uma lista com as músicas que possuem essa quantidade de acordes." << endl;
-        cin >> numberOfChords;
-        cout << "Entrada inválida." << endl; 
-        cout << "\n Entre com um inteiro positivo ou com 0 para voltar ao menu." << endl;
+    cin >> numberOfChords;
+
+    if (numberOfChords < 0)
+    {
+        cout << "Entrada invalida. Entre com um inteiro positivo ou com 0 para voltar ao menu: ";
+
+        return -1;
     }
     return numberOfChords;
 }
 
-string getTune() {
+string getTune()
+{
     string optTune;
 
-    cout << "Insira o tom desejado, procuraremos músicas com esse tom pra você." << endl;
+    cout << "Insira o tom desejado, procuraremos músicas com esse tom pra você: ";
     cin >> optTune;
 
     return optTune;
 }
 
-int getOffset() {
+int getOffset()
+{
     int offset;
 
-    while (offset < -20 || offset > 20) {
-	cout << "Digite o offset desejado (deve ser um inteiro). ";
-    cout << "Criaremos um rquivo com alteracao de tom!" << endl;
-	cin >> offset;
-    cout << "Entrada inválida." << endl; 
-    cout << "\n Entre com outro inteiro ou com 0 para voltar ao menu." << endl;
+    cin >> offset;
+
+    if (offset < -20 || offset > 20)
+    {
+        cout << "Entrada invalida. Entre com um inteiro entre -12 e 12 ou com 0 para voltar ao menu: ";
+        return 20;
     }
     return offset;
 }
 
-string getFileName() {
+string getFileName()
+{
     string filename;
-	
-    cout << "Digite o caminho completo para o arquivo: ";		
+
+    cout << "Digite o caminho completo para o arquivo: ";
     cin >> filename;
 
     return filename;
 }
 
-string getChord() {
+string getChord()
+{
     string chord;
-	
-    cout << "Digite o acorde desejado: ";		
+
+    cout << "Digite o acorde desejado: ";
     cin >> chord;
 
     return chord;
+}
+
+char getModification(bool isMajorMinor)
+{
+    char modification;
+
+    string specificModification = isMajorMinor ? "maior (M/+) ou menor (m)" : "setima (7) ou nona (9)";
+
+    cout << "Digite a modificacao " << specificModification << " a ser procurada: ";
+    cin >> modification;
+
+    if (isMajorMinor)
+    {
+        if (modification != 'M' && modification != '+' && modification != 'm' && modification != '0')
+        {
+            cout << "Entrada invalida. Digite um caractere correto (M, + ou m) ou 0 para voltar ao menu: ";
+            return 'E';
+        }
+    }
+    else
+    {
+        if (modification != '7' && modification != '9' && modification != '0')
+        {
+            cout << "Entrada invalida. Digite um caractere correto (7 ou 9) ou 0 para voltar ao menu: ";
+            return 'E';
+        }
+    }
+
+    return modification;
 }
