@@ -59,10 +59,34 @@ sub identifyMusicAndArtistName
 
 # --------------------------------------- DEBUG ------------------------------------
 
-# my @result = searchChordsFromLyrics("/home/fabiana/Desktop/trabalho-ling-prog/cifras/sandy_junior/no_fundo_do_coracao.txt");
+# my @result = identifyMusicAndArtistName("/home/fabiana/Desktop/trabalho-ling-prog/cifras/sandy_junior/no_fundo_do_coracao.txt");
+
+# print "oi\n";
 
 # foreach (@result) 
 # {
 # 	print ($_);
 # }
 # print $result;
+
+# print "teste identify\n";
+# my $path = "/home/fabiana/Desktop/trabalho-ling-prog/cifras/sandy_junior/no_fundo_do_coracao.txt";
+# my @result;
+
+# if ($path =~ /^.*\/cifras\/(.+)\/(.+)\.txt$/g) {
+# 	my $artist = $1;
+# 	my $name = $2;
+
+# 	# Removing underscores and replacing them with whitespace
+# 	$artist =~ s/_/ /g;
+# 	$name =~ s/_/ /g;
+
+# 	# Capitalizing first letter
+# 	$artist =~ s/^([a-z])/\U$1/g;
+# 	$name =~ s/^([a-z])/\U$1/g;
+
+# 	print ($artist, $name);
+
+# 	push (@result, $artist);
+# 	push (@result, $name);
+# }

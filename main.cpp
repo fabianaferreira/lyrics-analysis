@@ -11,7 +11,7 @@ Alunas: Fabiana Ferreira e Tamine Alves
 #include <string>
 #include <algorithm>
 #include "functions.h"
-// #include "exceptions.h"
+#include "exceptions.h"
 #include "lyricsAnalysis.h"
 
 using namespace std;
@@ -30,9 +30,9 @@ int main(int argc, char **argv, char **env)
 	{
 		path = getTabsPath(argv[0]);
 	}
-	catch (exception &e)
+	catch (LyricsAnalysisException &e)
 	{
-		cout << e.what() << endl;
+		cout << e.detailException() << endl;
 		path = getTabsPath(argv[0]);
 	}
 
@@ -41,9 +41,9 @@ int main(int argc, char **argv, char **env)
 		analysis.SetFilesList(path);
 	}
 
-	catch (exception &e)
+	catch (LyricsAnalysisException &e)
 	{
-		cout << e.what() << endl;
+		cout << e.detailException() << endl;
 		exit(-1);
 	}
 

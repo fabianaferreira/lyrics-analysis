@@ -11,21 +11,32 @@ Alunas: Fabiana Ferreira e Tamine Alves
 
 #include <iostream>
 #include <exception>
+#include <string>
 
-struct InvalidFilePath : public std::exception
+class LyricsAnalysisException
 {
-    virtual const char *what() const throw()
-    {
-        return "Houve um problema na leitura dos arquivos. Saindo do programa.";
-    }
+    public:
+        virtual std::string detailException() const throw() = 0;
 };
 
-struct InvalidOption : public std::exception
+class InvalidFilePath : public LyricsAnalysisException
 {
-    virtual const char *what() const throw()
-    {
-        return "Opcao invalida. Digite 'y' ou 'n'";
-    }
+    public:
+        virtual std::string detailException() const throw()
+        {
+            return "Houve um problema na leitura dos arquivos. Saindo do programa.";
+        }
+
+};
+
+class InvalidOption : public LyricsAnalysisException
+{
+    public:
+        virtual std::string detailException() const throw()
+        {
+            return "Opcao invalida";
+        }
+
 };
 
 #endif
