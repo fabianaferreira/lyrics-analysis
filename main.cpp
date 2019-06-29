@@ -30,10 +30,12 @@ int main(int argc, char **argv, char **env)
 	{
 		path = getTabsPath(argv[0]);
 	}
-	catch (LyricsAnalysisException &e)
+	catch (InvalidOption &e)
 	{
 		cout << e.detailException() << endl;
-		path = getTabsPath(argv[0]);
+		cout << "Saindo do programa.";
+		getKeyPressed();
+		exit(-1);
 	}
 
 	try
@@ -41,7 +43,7 @@ int main(int argc, char **argv, char **env)
 		analysis.SetFilesList(path);
 	}
 
-	catch (LyricsAnalysisException &e)
+	catch (InvalidDirectory &e)
 	{
 		cout << e.detailException() << endl;
 		exit(-1);
@@ -80,7 +82,9 @@ int main(int argc, char **argv, char **env)
 		/*----------------------------------------------------------------------------------*/
 
 		cout << "Opcao: ";
-		getline(cin, opString);
+		// getline(cin, opString);
+		cin >> opString;
+		// cin.ignore();
 
 		while ((opString.length() != 1 || !isdigit(opString[0])) || (opString[0] - '0') > 9)
 		{
@@ -96,6 +100,8 @@ int main(int argc, char **argv, char **env)
 		case 1:
 		{
 			analysis.ProcessFileList(&LyricsAnalysis::SearchChordsFromLyrics);
+
+			getKeyPressed();
 		}
 		break;
 
@@ -154,7 +160,23 @@ int main(int argc, char **argv, char **env)
 
 		case 4:
 		{
-			cout << "Entre com o tom desejado: ";
+			string lyrics;
+			try
+			{
+				lyrics = getFileName();
+			}
+			catch (InvalidFileExtension &e)
+			{
+				cout << e.detailException() << endl;
+				getKeyPressed();
+				break;
+			}
+			catch (InvalidFilePath &e)
+			{
+				cout << e.detailException() << endl;
+				getKeyPressed();
+				break;
+			}
 			int offset = getOffset();
 
 			while (offset == 20)
@@ -164,7 +186,7 @@ int main(int argc, char **argv, char **env)
 			if (offset == 0)
 				break;
 
-			if (analysis.ChangeLyricsTune(getFileName(), offset) == 1)
+			if (analysis.ChangeLyricsTune(lyrics, offset) == 1)
 			{
 				cout << "Arquivo criado com sucesso! ";
 				getKeyPressed();
@@ -201,26 +223,36 @@ int main(int argc, char **argv, char **env)
 
 		case 6:
 		{
-			string filename = getFileName();
-			ifstream infile(filename.c_str());
-
-			if (infile.good())
+			string filename;
+			try
 			{
-				if (analysis.CheckIfLyricsHaveIntro(filename))
-				{
-					vector<string> musicAndArtist = analysis.IdentifyMusicAndArtistName(filename);
-					cout << "A musica "
-						 << " (" << musicAndArtist.at(0) << " | " << musicAndArtist.at(1)
-						 << ") tem introducao" << endl;
+				string filename = getFileName();
+			}
+			catch (InvalidFileExtension &e)
+			{
+				cout << e.detailException() << endl;
+				getKeyPressed();
+				break;
+			}
+			catch (InvalidFilePath &e)
+			{
+				cout << e.detailException() << endl;
+				getKeyPressed();
+				break;
+			}
 
-					getKeyPressed();
-				}
+			if (analysis.CheckIfLyricsHaveIntro(filename))
+			{
+				vector<string> musicAndArtist = analysis.IdentifyMusicAndArtistName(filename);
+				cout << "A musica "
+					 << " (" << musicAndArtist.at(0) << " | " << musicAndArtist.at(1)
+					 << ") tem introducao" << endl;
 			}
 			else
 			{
-				cout << "Nao foi possivel abrir o arquivo. ";
-				getKeyPressed();
+				cout << "A musica informada nao tem introducao." << endl;
 			}
+			getKeyPressed();
 		}
 		break;
 

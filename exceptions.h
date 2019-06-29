@@ -19,14 +19,32 @@ class LyricsAnalysisException
         virtual std::string detailException() const throw() = 0;
 };
 
+class InvalidDirectory : public LyricsAnalysisException
+{
+public:
+    virtual std::string detailException() const throw()
+    {
+        return "ERRO: Caminho para o diretorio dos arquivos de cifras invalido. Saindo do programa.";
+    }
+};
+
 class InvalidFilePath : public LyricsAnalysisException
 {
     public:
         virtual std::string detailException() const throw()
         {
-            return "Houve um problema na leitura dos arquivos. Saindo do programa.";
+            return "ERRO: Caminho de arquivo digitado eh invalido.";
         }
 
+};
+
+class InvalidFileExtension : public LyricsAnalysisException
+{
+public:
+    virtual std::string detailException() const throw()
+    {
+        return "ERRO: Extensao do arquivo invalida";
+    }
 };
 
 class InvalidOption : public LyricsAnalysisException
@@ -34,7 +52,7 @@ class InvalidOption : public LyricsAnalysisException
     public:
         virtual std::string detailException() const throw()
         {
-            return "Opcao invalida";
+            return "ERRO: Opcao invalida";
         }
 
 };

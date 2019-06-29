@@ -59,7 +59,7 @@ void LyricsAnalysis::SetFilesList(const string &path)
     }
     else
     {
-        throw InvalidFilePath();
+        throw InvalidDirectory();
     }
 }
 

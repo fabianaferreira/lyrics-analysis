@@ -14,6 +14,7 @@ Alunas: Fabiana Ferreira e Tamine Alves
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
+#include <fstream>
 #include "exceptions.h"
 
 std::string getTabsPath(std::string);
