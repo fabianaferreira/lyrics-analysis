@@ -247,6 +247,8 @@ sub ChangeLyricsTune
                 }
             }
         }
+
+        print $f "$modifiedLine";
     }
 
     close $f or die "Error: closing file '$resultFile'";  

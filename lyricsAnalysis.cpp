@@ -223,11 +223,12 @@ void LyricsAnalysis::SearchSimilarChordsInDict(string chord)
 
 void LyricsAnalysis::SearchModifiedChordsInDict(char modification)
 {
+    string s(1, modification);
     dSP;
     ENTER;
     SAVETMPS;
     PUSHMARK(SP);
-    XPUSHs(sv_2mortal(newSVpv(&modification, strlen(&modification))));
+    XPUSHs(sv_2mortal(newSVpv(s.c_str(), s.length())));
     PUTBACK;
     int count = call_pv("searchModifiedChordsInDict", G_ARRAY);
     SPAGAIN;
@@ -245,11 +246,12 @@ void LyricsAnalysis::SearchModifiedChordsInDict(char modification)
 
 void LyricsAnalysis::SearchMajorOrMinorChordsInDict(char modification)
 {
+    string s(1, modification);
     dSP;
     ENTER;
     SAVETMPS;
     PUSHMARK(SP);
-    XPUSHs(sv_2mortal(newSVpv(&modification, strlen(&modification))));
+    XPUSHs(sv_2mortal(newSVpv(s.c_str(), s.length())));
     PUTBACK;
     int count = call_pv("searchMajorOrMinorChordsInDict", G_ARRAY);
     SPAGAIN;

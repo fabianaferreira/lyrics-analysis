@@ -29,6 +29,7 @@ int main(int argc, char **argv, char **env)
 	try
 	{
 		path = getTabsPath(argv[0]);
+		cin.ignore();
 	}
 	catch (InvalidOption &e)
 	{
@@ -226,7 +227,7 @@ int main(int argc, char **argv, char **env)
 			string filename;
 			try
 			{
-				string filename = getFileName();
+				filename = getFileName();
 			}
 			catch (InvalidFileExtension &e)
 			{
@@ -259,6 +260,7 @@ int main(int argc, char **argv, char **env)
 		case 7:
 		{
 			analysis.SearchSimilarChordsInDict(getChord());
+			getKeyPressed();
 		}
 
 		break;
