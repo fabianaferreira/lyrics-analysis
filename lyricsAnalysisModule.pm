@@ -247,8 +247,6 @@ sub ChangeLyricsTune
                 }
             }
         }
-
-        print $f "$modifiedLine";
     }
 
     close $f or die "Error: closing file '$resultFile'";  
@@ -284,9 +282,6 @@ sub SearchSimilarChordsInDict
     {
         return @list;
     }
-
-    print "Desired quantity: $desiredFingersQnt \n";
-    print "Desired barre chord: $desiredBarreChord \n";
 
     # Given the two variables, now we need to search in the file
     # for the chords that have less or equal quantity of chords and
