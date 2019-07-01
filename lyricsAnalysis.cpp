@@ -18,19 +18,6 @@ LyricsAnalysis::LyricsAnalysis(int argc, char **argv, char **env, char *filename
     wrapper->run();
 
     files = new vector<string>();
-
-    // //Getting files' list
-    // cout << "\n\nBuscando arquivos..." << endl;
-    // if (GetFilesList(path, files, false))
-    // {
-    //     cout << "\nBusca Concluída! Vamos começar.\n\n"
-    //          << endl;
-    // }
-    // else
-    // {
-    //     cout << "Houve um problema na leitura do arquivo" << endl;
-    //     //JOGAR EXCECAO
-    // }
 }
 
 LyricsAnalysis::~LyricsAnalysis()

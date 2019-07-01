@@ -3,7 +3,7 @@
 # Disciplina de Linguagens de Programação 2019.1
 # Trabalho: Gerenciador de Busca de Cifras
 # Alunas: Fabiana Ferreira e Tamine Alves
-
+use lib './';
 use open IN => ':std', ':encoding(UTF-8)';  #Using these lines to print special characters correctly
 use open OUT => ':utf8';
 use strict;

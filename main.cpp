@@ -46,7 +46,7 @@ int main(int argc, char **argv, char **env)
 
 	catch (InvalidDirectory &e)
 	{
-		cout << e.detailException() << endl;
+		cout << e.detailException() << " Saindo do Programa." << endl;
 		exit(-1);
 	}
 

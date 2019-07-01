@@ -24,7 +24,7 @@ class InvalidDirectory : public LyricsAnalysisException
 public:
     virtual std::string detailException() const throw()
     {
-        return "ERRO: Caminho para o diretorio dos arquivos de cifras invalido. Saindo do programa.";
+        return "ERRO: Caminho para o diretorio dos arquivos de cifras invalido.";
     }
 };
 
