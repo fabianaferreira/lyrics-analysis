@@ -6,7 +6,6 @@ Trabalho: Gerenciador de Busca de Cifras
 Alunas: Fabiana Ferreira e Tamine Alves
 */
 
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -49,7 +48,7 @@ string getTabsPath(string executablePath)
     throw InvalidOption();
 }
 
-bool getFilesList(const std::string &path, std::vector<std::string> *files, const bool showHiddenDirs = false)
+bool getFilesList(const string &path, vector<string> *files, const bool showHiddenDirs = false)
 {
     DIR *dpdf;
     struct dirent *epdf;
@@ -90,6 +89,13 @@ int getNumberOfChords()
     return numberOfChords;
 }
 
+string getLyrics()
+{
+    string lyrics;
+    cout << "Qual musica voce deseja mudar o tom (caminho completo, inclusive a extensao '.txt') ? ";
+    cin >> lyrics;
+}
+
 string getTune()
 {
     string optTune;
@@ -104,11 +110,12 @@ int getOffset()
 {
     int offset;
 
+    cout << "Entre com o offset desejado: ";
     cin >> offset;
 
-    if (offset < -20 || offset > 20)
+    if (offset < -11 || offset > 11)
     {
-        cout << "Entrada invalida. Entre com um inteiro entre -12 e 12 ou com 0 para voltar ao menu: ";
+        cout << "Entrada invalida. Entre com um inteiro entre -11 e 11 ou com 0 para voltar ao menu: ";
         return 20;
     }
     return offset;
@@ -121,7 +128,16 @@ string getFileName()
     cout << "Digite o caminho completo para o arquivo: ";
     cin >> filename;
 
-    return filename;
+    size_t found = filename.find(".txt");
+
+    if (found != string::npos)
+    {
+        ifstream infile(filename.c_str());
+        if (infile.good())
+            return filename;
+        throw InvalidFilePath();
+    }
+    throw InvalidFileExtension();
 }
 
 string getChord()
